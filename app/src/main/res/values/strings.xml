@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ExpenseTracker</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="today_s_date">Today\'s Date</string>
+    <string name="select_date">Select Date</string>
+    <string name="expense">Expense</string>
+    <string name="expense_by">Expense By</string>
+    <string name="description">Description</string>
+</resources>
