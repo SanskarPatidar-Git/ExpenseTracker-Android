@@ -6,4 +6,5 @@
     <string name="expense">Expense</string>
     <string name="expense_by">Expense By</string>
     <string name="description">Description</string>
+    <string name="view_expense">View Expense</string>
 </resources>
