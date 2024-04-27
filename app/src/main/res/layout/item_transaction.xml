@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_2sdp"
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:strokeColor="@color/black"
+    app:cardBackgroundColor="@color/black_secondary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_6sdp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sanskar Patidar"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_number"/>
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+91 7224890928"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            android:includeFontPadding="false"
+            android:textAlignment="textEnd"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintTop_toTopOf="@+id/tv_name"
+            app:layout_constraintStart_toEndOf="@+id/tv_name"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="24 Apr, 2024"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:drawableStartCompat ="@drawable/ic_circle_white"
+            android:drawablePadding="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_number"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/tv_transaction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="5000.0"
+            android:enabled="false"
+            android:focusable="false"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_16ssp"
+            app:drawableStartCompat ="@drawable/ic_currency_green"
+            android:includeFontPadding="false"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_edit"/>
+
+
+        <ImageView
+            android:id="@+id/img_edit"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/ic_circle_black"
+            android:padding="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintTop_toTopOf="@+id/tv_transaction"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_transaction"
+            app:layout_constraintStart_toEndOf="@+id/tv_transaction"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="Save"
+            android:includeFontPadding="false"
+            android:textSize="@dimen/_12ssp"
+            app:cornerRadius="@dimen/_4sdp"
+            app:backgroundTint="@color/green"
+            app:layout_constraintStart_toEndOf="@+id/img_edit"
+            app:layout_constraintTop_toTopOf="@+id/tv_transaction"
+            app:layout_constraintEnd_toStartOf="@+id/img_call"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_transaction"/>
+
+        <ImageView
+            android:id="@+id/img_call"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:src="@drawable/ic_call"
+            android:background="@drawable/ic_circle_black"
+            android:padding="@dimen/_6sdp"
+            app:layout_constraintTop_toTopOf="@+id/tv_transaction"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_transaction"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
