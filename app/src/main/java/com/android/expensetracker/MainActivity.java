@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.android.expensetracker.databinding.ActivityMainBinding;
 import com.android.expensetracker.utility.AppUtil;
 import com.android.expensetracker.views.addexpense.AddExpenseActivity;
+import com.android.expensetracker.views.transactions.TransactionBottomSheet;
 import com.android.expensetracker.views.users.UsersActivity;
 import com.android.expensetracker.views.viewexpense.ViewExpenseActivity;
 
@@ -37,5 +38,22 @@ public class MainActivity extends AppCompatActivity {
         binding.tvUsers.setOnClickListener(view -> {
             AppUtil.navigateTo(MainActivity.this , UsersActivity.class);
         });
+
+        binding.btnLentMoney.setOnClickListener(view -> {
+            openBottomSheet(Constants.LENT_MODE);
+        });
+
+        binding.btnBorrowMoney.setOnClickListener(view -> {
+            openBottomSheet(Constants.BORROWED_MODE);
+        });
+    }
+
+    private void openBottomSheet(int mode){
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.MODE , mode);
+
+        TransactionBottomSheet bottomSheet = new TransactionBottomSheet();
+        bottomSheet.setArguments(bundle);
+        bottomSheet.show(getSupportFragmentManager() , "TransactionBottomSheet");
     }
 }
