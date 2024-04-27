@@ -7,18 +7,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.expensetracker.R;
 import com.android.expensetracker.databinding.ActivityAddExpenseBinding;
 import com.android.expensetracker.utility.DateFormat;
-import com.android.expensetracker.utility.DatePickerListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AddExpenseActivity extends AppCompatActivity {
 
@@ -101,7 +97,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void addExpenseToDB() {
-        new AddExpenseRepository().addExpense(expenseEntity);
+        new ExpenseRepository().addExpense(expenseEntity);
     }
 
     private boolean isExpenseDetailsValid(){

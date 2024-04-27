@@ -8,6 +8,7 @@ import com.android.expensetracker.databinding.ActivityMainBinding;
 import com.android.expensetracker.utility.AppUtil;
 import com.android.expensetracker.views.addexpense.AddExpenseActivity;
 import com.android.expensetracker.views.users.UsersActivity;
+import com.android.expensetracker.views.viewexpense.ViewExpenseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.btnViewExpense.setOnClickListener(view -> {
-
+            AppUtil.navigateTo(MainActivity.this , ViewExpenseActivity.class);
         });
 
         binding.tvUsers.setOnClickListener(view -> {

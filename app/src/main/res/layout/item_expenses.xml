@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:strokeColor="@color/black"
+    android:layout_marginHorizontal="@dimen/_2sdp"
+    android:layout_marginVertical="@dimen/_1sdp"
+    app:cardBackgroundColor="@color/black_secondary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp">
+
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="24 Apr, 2024"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_semi_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_expense_of"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lunch"
+        app:drawableStartCompat="@drawable/ic_circle_white"
+        android:drawablePadding="@dimen/_3sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date"/>
+
+    <TextView
+        android:id="@+id/tv_expense_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cash"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:includeFontPadding="false"
+        android:fontFamily="@font/poppins_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_expense"/>
+
+    <TextView
+        android:id="@+id/tv_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2600.0"
+        android:includeFontPadding="false"
+        app:drawableStartCompat="@drawable/ic_currency_green"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/green"
+        android:fontFamily="@font/poppins_semi_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:drawableStartCompat="@drawable/ic_circle_white"
+        android:drawablePadding="@dimen/_3sdp"
+        android:text="Idli dosa and vada pav"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:fontFamily="@font/poppins_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_expense_of"
+        app:layout_constraintEnd_toStartOf="@+id/btn_remove_expense"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_remove_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="Remove"
+            android:includeFontPadding="false"
+            android:textSize="@dimen/_10ssp"
+            app:cornerRadius="@dimen/_2sdp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_expense_by"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
