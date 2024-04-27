@@ -12,7 +12,7 @@ import com.android.expensetracker.views.users.UsersEntity;
 import com.android.expensetracker.views.addexpense.ExpenseDao;
 import com.android.expensetracker.views.addexpense.ExpenseEntity;
 
-@Database(entities = {ExpenseEntity.class , UsersEntity.class} , version = 1)
+@Database(entities = {ExpenseEntity.class , UsersEntity.class} , version = 2)
 public abstract class AppDatabase extends RoomDatabase{
 
     private static AppDatabase appDatabase;
@@ -24,6 +24,7 @@ public abstract class AppDatabase extends RoomDatabase{
                             AppDatabase.class,
                             Constants.DB_NAME)
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
         }
         return appDatabase;

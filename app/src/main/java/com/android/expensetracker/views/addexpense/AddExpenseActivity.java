@@ -3,10 +3,12 @@ package com.android.expensetracker.views.addexpense;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -48,12 +50,13 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         binding.checkTodayDate.setOnCheckedChangeListener((compoundButton, b) -> {
             if(b){
-                binding.etExpenseDate.setClickable(false);
+                binding.etExpenseDate.setEnabled(false);
                 binding.etExpenseDate.setFocusable(false);
-                binding.etExpenseDate.setText(DateFormat.getCurrentDate().toString());
-                expenseEntity.setDate(DateFormat.getCurrentDate());
+                String currentDate = DateFormat.getCurrentDate();
+                binding.etExpenseDate.setText(currentDate);
+                expenseEntity.setDate(currentDate);
             } else {
-                binding.etExpenseDate.setClickable(true);
+                binding.etExpenseDate.setEnabled(true);
                 binding.etExpenseDate.setFocusable(true);
                 expenseEntity.setDate(null);
                 binding.etExpenseDate.setText("");
@@ -61,38 +64,38 @@ public class AddExpenseActivity extends AppCompatActivity {
         });
 
         binding.etExpenseDate.setOnClickListener(view -> {
-            DateFormat.getDateFromCalender(AddExpenseActivity.this, new DatePickerListener() {
-                @Override
-                public void onSelectDate(Date date) {
-                    expenseEntity.setDate(date);
-                    binding.etExpenseDate.setText(date.toString());
-                }
+            DateFormat.getDateFromCalender(AddExpenseActivity.this, date -> {
+                expenseEntity.setDate(date);
+                binding.etExpenseDate.setText(date);
             });
         });
 
         binding.expenseOfSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                String expenseOf = (String) adapterView.getSelectedItem();
+                expenseEntity.setExpenseOf(expenseOf);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        binding.radioGroupExpenseBy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                String expenseBy = radioGroup.getTransitionName();
+
+        binding.radioGroupExpenseBy.setOnCheckedChangeListener((radioGroup, i) -> {
+            RadioButton radioButton = findViewById(i);
+            if (radioButton != null) {
+                String expenseBy = radioButton.getText().toString();
                 expenseEntity.setExpenseBy(expenseBy);
             }
+
         });
 
         binding.btnAddExpense.setOnClickListener(view -> {
             if(isExpenseDetailsValid()){
                 addExpenseToDB();
+                Toast.makeText(this, "Expense Added", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -102,9 +105,14 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private boolean isExpenseDetailsValid(){
-        expenseEntity.setExpense(Double.parseDouble(binding.etExpense.getText().toString()));
+        String expense = binding.etExpense.getText().toString().trim();
+        if(TextUtils.isEmpty(expense))
+            expenseEntity.setExpense(0);
+        else
+            expenseEntity.setExpense(Double.parseDouble(expense));
         expenseEntity.setDescription(binding.etDescription.getText().toString().trim());
-        System.out.println("==== "+expenseEntity);
+        System.out.println("AddExpenseActivity::isExpenseDetailsValid() ExpenseEntity -> "+expenseEntity);
+
         if(expenseEntity.getDate() == null)
             Toast.makeText(this, "Select date", Toast.LENGTH_SHORT).show();
         else if(expenseEntity.getExpenseOf() == null)
@@ -120,12 +128,16 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     private void insertDummyData(){
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Pankaj");
-        arrayList.add("Sanskar");
-        arrayList.add("Chirag");
-        arrayList.add("Prajju");
+        arrayList.add("Lunch");
+        arrayList.add("Breakfast");
+        arrayList.add("Tea");
+        arrayList.add("Petrol");
+        arrayList.add("Movie");
+        arrayList.add("Other");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1 , arrayList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_spinner_textview, arrayList);
+        adapter.setDropDownViewResource(R.layout.item_spinner_textview);
         binding.expenseOfSpinner.setAdapter(adapter);
+
     }
 }

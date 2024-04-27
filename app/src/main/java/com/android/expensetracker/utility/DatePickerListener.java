@@ -4,5 +4,5 @@ import java.util.Date;
 
 public interface DatePickerListener {
 
-    public void onSelectDate(Date date);
+    public void onSelectDate(String date);
 }

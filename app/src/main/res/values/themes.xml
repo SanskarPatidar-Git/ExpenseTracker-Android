@@ -10,4 +10,9 @@
 
     <style name="Theme.ExpenseTracker" parent="Base.Theme.ExpenseTracker" />
 
+    <style name="SpinnerDropdownStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:background">@color/black_secondary</item> <!-- Set background color to black -->
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

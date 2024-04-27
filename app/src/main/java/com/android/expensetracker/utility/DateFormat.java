@@ -1,19 +1,29 @@
 package com.android.expensetracker.utility;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.widget.DatePicker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class DateFormat {
 
-    public static Date getCurrentDate() {
-        return new Date();
+    public static String getCurrentDate() {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1; // Months are zero-based
+        int year = calendar.get(Calendar.YEAR);
+        @SuppressLint("DefaultLocale")
+        String formattedDate = String.format("%02d-%02d-%04d", day, month, year);
+        System.out.println("Current Date: " + formattedDate);
+        return formattedDate;
     }
 
     public static void getDateFromCalender(Context context, DatePickerListener datePickerListener) {
@@ -31,7 +41,7 @@ public class DateFormat {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = dayOfMonth + "-" + month + "-" + year;
-                datePickerListener.onSelectDate(getDateFromString(date));
+                datePickerListener.onSelectDate(date);
             }
         }, year, month, day);
         dialog.show();

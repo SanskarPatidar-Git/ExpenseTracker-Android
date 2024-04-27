@@ -14,8 +14,8 @@ public class ExpenseEntity {
     @ColumnInfo(name = "id")
     private int id;
 
-    @Ignore
-    private Date date;
+    @ColumnInfo(name = "expense_date")
+    private String date;
 
     @ColumnInfo(name = "expense_of")
     private String expenseOf;
@@ -41,11 +41,11 @@ public class ExpenseEntity {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

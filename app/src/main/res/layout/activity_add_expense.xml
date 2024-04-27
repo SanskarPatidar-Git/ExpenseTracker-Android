@@ -79,15 +79,28 @@
                 app:layout_constraintStart_toEndOf="@+id/check_today_date"
                 app:layout_constraintTop_toTopOf="@+id/check_today_date" />
 
+            <TextView
+                android:id="@+id/tv_expense_of"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@null"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Expense of"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/check_today_date" />
 
             <Spinner
                 android:id="@+id/expense_of_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:theme="@style/SpinnerDropdownStyle"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:background="@drawable/drawable_shape_cornercut_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/check_today_date"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_expense_of"/>
 
 
             <com.google.android.material.textfield.TextInputLayout
