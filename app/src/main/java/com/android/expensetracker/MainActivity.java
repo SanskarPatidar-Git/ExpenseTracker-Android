@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.android.expensetracker.databinding.ActivityMainBinding;
 import com.android.expensetracker.utility.AppUtil;
 import com.android.expensetracker.views.addexpense.AddExpenseActivity;
+import com.android.expensetracker.views.users.UsersActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnViewExpense.setOnClickListener(view -> {
 
+        });
+
+        binding.tvUsers.setOnClickListener(view -> {
+            AppUtil.navigateTo(MainActivity.this , UsersActivity.class);
         });
     }
 }
