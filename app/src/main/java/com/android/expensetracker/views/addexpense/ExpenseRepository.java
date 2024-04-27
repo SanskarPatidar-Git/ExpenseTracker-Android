@@ -19,4 +19,8 @@ public class ExpenseRepository {
     public List<ExpenseEntity> getAllExpenses(){
         return expenseDao.getAllExpenses();
     }
+
+    public void deleteExpense(int id){
+        expenseDao.delete(id);
+    }
 }

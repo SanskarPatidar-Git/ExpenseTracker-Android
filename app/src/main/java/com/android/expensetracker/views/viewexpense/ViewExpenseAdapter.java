@@ -1,5 +1,6 @@
 package com.android.expensetracker.views.viewexpense;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -55,13 +56,26 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
         holder.binding.tvDate.setText(dateArr[0] + " "+ DateFormat.getMonthNameByDigit(Integer.valueOf(dateArr[1])) + ", " + dateArr[2]);
 
         holder.binding.btnRemoveExpense.setOnClickListener(view -> {
-            itemClickListener.onClickRemove(entity.getId() , position);
+            itemClickListener.onClickRemove(entity.getId() , holder.getAdapterPosition());
         });
     }
 
     @Override
     public int getItemCount() {
         return expenseList.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void deleteExpense(int position){
+        System.out.println("Position : "+position);
+        try{
+            expenseList.remove(position);
+            notifyItemRemoved(position);
+        } catch (Exception e){
+            System.err.println("Exception Occurred");
+            notifyDataSetChanged();
+        }
+
     }
 
     public static class ViewExpenseViewHolder extends RecyclerView.ViewHolder {

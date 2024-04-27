@@ -14,4 +14,7 @@ public interface ExpenseDao {
 
     @Query("SELECT * FROM tbl_expenses")
     List<ExpenseEntity> getAllExpenses();
+
+    @Query("DELETE FROM tbl_expenses WHERE id = :id")
+    public void delete(int id);
 }
