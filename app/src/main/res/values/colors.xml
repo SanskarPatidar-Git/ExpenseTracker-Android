@@ -7,5 +7,6 @@
     <color name="black_secondary">#3D3D3D</color>
     <color name="white_secondary">#40FFFFFF</color>
     <color name="red">#CD3514</color>
+    <color name="green">#48B151</color>
     <color name="red_secondary">#90CD3514</color>
 </resources>

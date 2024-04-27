@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/black_secondary"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
-        android:background="@drawable/drawable_shape_gradient"
+        android:background="@color/red"
         android:gravity="center_vertical"
-        android:padding="@dimen/_8sdp"
         android:orientation="horizontal"
+        android:padding="@dimen/_8sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:src="@drawable/ic_currency"/>
+            android:src="@drawable/ic_currency" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expense-Tracker"
             android:layout_marginStart="@dimen/_8sdp"
             android:fontFamily="@font/poppins_semi_bold"
+            android:text="Expense-Tracker"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"/>
+            android:textSize="@dimen/_16ssp" />
 
     </LinearLayout>
 
@@ -42,41 +42,340 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp">
+            android:padding="@dimen/_4sdp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_add_expense"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_50sdp"
-                app:cornerRadius="@dimen/_4sdp"
-                android:backgroundTint="@color/black"
-                android:text="@string/add_expense"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textSize="@dimen/_12ssp"
-                app:rippleColor="@color/red"
-                android:layout_marginEnd="@dimen/_4sdp"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/daily_expense_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_4sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_view_expense"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/black">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_view_expense"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_50sdp"
-                app:cornerRadius="@dimen/_4sdp"
-                android:backgroundTint="@color/black"
-                android:text="@string/view_expense"
-                android:fontFamily="@font/poppins_semi_bold"
-                android:textSize="@dimen/_12ssp"
-                app:rippleColor="@color/red"
-                android:layout_marginStart="@dimen/_4sdp"
-                app:layout_constraintStart_toEndOf="@+id/btn_add_expense"
-                app:layout_constraintTop_toTopOf="@+id/btn_add_expense"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_6sdp">
+
+
+                    <TextView
+                        android:id="@+id/tv_daily_expense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Daily Expenses"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1.5dp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_daily_expense"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_daily_expense"
+                        app:layout_constraintTop_toTopOf="@id/tv_daily_expense" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_expense"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:backgroundTint="@color/black_secondary"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="@string/add_expense"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_view_expense"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_daily_expense"
+                        app:rippleColor="@color/white" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_view_expense"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:backgroundTint="@color/black_secondary"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="@string/view_expense"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/btn_add_expense"
+                        app:layout_constraintTop_toTopOf="@+id/btn_add_expense"
+                        app:rippleColor="@color/white" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/transactions_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/daily_expense_card_view"
+                app:strokeColor="@color/black">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_6sdp">
+
+
+                    <TextView
+                        android:id="@+id/tv_transactions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Transactions"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1.5dp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_transactions"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_transactions"
+                        app:layout_constraintTop_toTopOf="@id/tv_transactions" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_transaction_given"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/black_secondary"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_2sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/layout_transaction_taken"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_transactions">
+
+                        <TextView
+                            android:id="@+id/tv_label_given"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Given(Lent)"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <TextView
+                            android:id="@+id/tv_given"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:includeFontPadding="false"
+                            android:text="+5000.0"
+                            android:textAlignment="center"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_transaction_taken"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:background="@color/black_secondary"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_2sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/layout_transaction_total"
+                        app:layout_constraintStart_toEndOf="@+id/layout_transaction_given"
+                        app:layout_constraintTop_toTopOf="@+id/layout_transaction_given">
+
+                        <TextView
+                            android:id="@+id/tv_label_taken"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Taken(Borrow)"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <TextView
+                            android:id="@+id/tv_taken"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:includeFontPadding="false"
+                            android:text="-2000.0"
+                            android:textAlignment="center"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_transaction_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:background="@color/black_secondary"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_2sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/layout_transaction_taken"
+                        app:layout_constraintTop_toTopOf="@+id/layout_transaction_taken">
+
+                        <TextView
+                            android:id="@+id/tv_label_total"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Total"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <TextView
+                            android:id="@+id/tv_total"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semi_bold"
+                            android:includeFontPadding="false"
+                            android:text="+3000.0"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_transactions_helper_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="This is your total transactions exchange for your Lent and Borrowed money."
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_transaction_given" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_lent_money"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:backgroundTint="@color/green"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Lent Money"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_borrow_money"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_transactions_helper_text" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_borrow_money"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:backgroundTint="@color/red"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Borrow Money"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/btn_lent_money"
+                        app:layout_constraintTop_toTopOf="@+id/btn_lent_money" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_all_transactions"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:backgroundTint="@color/black_secondary"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="All Transactions"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_lent_money"
+                        app:rippleColor="@color/white" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/settings_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/transactions_card_view"
+                app:strokeColor="@color/black">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_6sdp">
+
+                    <TextView
+                        android:id="@+id/tv_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Settings"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1.5dp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_settings"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_settings"
+                        app:layout_constraintTop_toTopOf="@id/tv_settings" />
+
+                    <TextView
+                        android:id="@+id/tv_users"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Users"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:drawableTopCompat="@drawable/ic_person"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_settings" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
 
 </LinearLayout>
