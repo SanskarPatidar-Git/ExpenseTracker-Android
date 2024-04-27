@@ -75,7 +75,10 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
             System.err.println("Exception Occurred");
             notifyDataSetChanged();
         }
+    }
 
+    public List<ExpenseEntity> getExpenseList(){
+        return expenseList;
     }
 
     public static class ViewExpenseViewHolder extends RecyclerView.ViewHolder {

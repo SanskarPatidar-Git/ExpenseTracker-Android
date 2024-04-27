@@ -3,11 +3,14 @@ package com.android.expensetracker.views.viewexpense;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.android.expensetracker.R;
 import com.android.expensetracker.databinding.ActivityViewExpenseBinding;
+import com.android.expensetracker.utility.DateFormat;
 import com.android.expensetracker.views.addexpense.ExpenseEntity;
 import com.android.expensetracker.views.addexpense.ExpenseRepository;
 
@@ -28,6 +31,7 @@ public class ViewExpenseActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         init();
+        initListeners();
         getAllExpenses();
     }
 
@@ -35,6 +39,13 @@ public class ViewExpenseActivity extends AppCompatActivity {
         expenseRepository = new ExpenseRepository();
         binding.header.tvTitle.setText("All Expenses");
     }
+
+    private void initListeners(){
+        binding.header.imgBack.setOnClickListener(view -> {
+            finish();
+        });
+    }
+
     private void getAllExpenses(){
         List<ExpenseEntity> expenseList = expenseRepository.getAllExpenses();
         Collections.reverse(expenseList);
@@ -51,6 +62,7 @@ public class ViewExpenseActivity extends AppCompatActivity {
                 showAlertDialog(id,position);
             }
         });
+        initExpenseActivities();
     }
 
     private void showAlertDialog(int id , int position) {
@@ -71,5 +83,69 @@ public class ViewExpenseActivity extends AppCompatActivity {
             }
         });
         dialog.show();
+    }
+
+    private void getMonthBasisExpense(String month){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                List<ExpenseEntity> expenseList = adapter.getExpenseList();
+                double monthExpense = 0;
+                for(ExpenseEntity entity : expenseList){
+                    if(entity.getDate().contains(month))
+                        monthExpense += entity.getExpense();
+                }
+                binding.tvExpenseMonth.setText(String.valueOf(monthExpense));
+                handler.removeCallbacks(this);
+            }
+        });
+    }
+
+    private void getYearBasisExpense(String year){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                List<ExpenseEntity> expenseList = adapter.getExpenseList();
+                double yearExpense = 0;
+                for(ExpenseEntity entity : expenseList){
+                    if(entity.getDate().contains(year))
+                        yearExpense += entity.getExpense();
+                }
+                binding.tvExpenseYear.setText(String.valueOf(yearExpense));
+                handler.removeCallbacks(this);
+            }
+        });
+    }
+
+    private void getTodayBasisExpense(){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                List<ExpenseEntity> expenseList = expenseRepository.getExpensesOfToday();
+                double todayExpense = 0;
+                for(ExpenseEntity entity : expenseList)
+                    todayExpense += entity.getExpense();
+                binding.tvExpenseToday.setText(String.valueOf(todayExpense));
+                handler.removeCallbacks(this);
+            }
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initExpenseActivities(){
+        String currentDate = DateFormat.getCurrentDate();
+        String[] dateArr = currentDate.split("-");
+        int month = Integer.parseInt(dateArr[1]);
+        int year = Integer.parseInt(dateArr[2]);
+
+        binding.tvLabelMonth.setText("Month("+DateFormat.getMonthNameByDigit(month)+")");
+        binding.tvLabelYear.setText("Year("+year+")");
+
+        getTodayBasisExpense();
+        getMonthBasisExpense(dateArr[1]+"-"+dateArr[2]); // 04-2024
+        getYearBasisExpense(dateArr[2]);
     }
 }

@@ -1,6 +1,7 @@
 package com.android.expensetracker.views.addexpense;
 
 import com.android.expensetracker.db.AppDatabase;
+import com.android.expensetracker.utility.DateFormat;
 
 import java.util.List;
 
@@ -22,5 +23,9 @@ public class ExpenseRepository {
 
     public void deleteExpense(int id){
         expenseDao.delete(id);
+    }
+
+    public List<ExpenseEntity> getExpensesOfToday(){
+        return expenseDao.getExpensesOfToday(DateFormat.getCurrentDate());
     }
 }

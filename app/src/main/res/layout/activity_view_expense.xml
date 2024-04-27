@@ -25,13 +25,168 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/activity_card_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/black"
         android:layout_margin="@dimen/_4sdp"
         app:strokeColor="@color/black"
-        android:visibility="gone"
+        app:cardCornerRadius="@dimen/_4sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_6sdp">
+
+            <TextView
+                android:id="@+id/tv_expense_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:text="Expense Activities"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1.5dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_expense_activity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_expense_activity"
+                app:layout_constraintTop_toTopOf="@id/tv_expense_activity" />
+
+            <LinearLayout
+                android:id="@+id/layout_today_expense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/shape_cornercut_black_secondary"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_2sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                app:layout_constraintEnd_toStartOf="@+id/layout_month_expense"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_expense_activity">
+
+                <TextView
+                    android:id="@+id/tv_label_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Today"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tv_expense_today"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:includeFontPadding="false"
+                    android:layout_gravity="center_horizontal"
+                    app:drawableStartCompat="@drawable/ic_currency_red"
+                    android:text="0.0"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_month_expense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:background="@drawable/shape_cornercut_black_secondary"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_2sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                app:layout_constraintEnd_toStartOf="@+id/layout_year_expense"
+                app:layout_constraintStart_toEndOf="@+id/layout_today_expense"
+                app:layout_constraintTop_toTopOf="@+id/layout_today_expense">
+
+                <TextView
+                    android:id="@+id/tv_label_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Month"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tv_expense_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:includeFontPadding="false"
+                    android:layout_gravity="center_horizontal"
+                    app:drawableStartCompat="@drawable/ic_currency_red"
+                    android:text="0.0"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_year_expense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:background="@drawable/shape_cornercut_black_secondary"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_2sdp"
+                android:paddingVertical="@dimen/_6sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/layout_month_expense"
+                app:layout_constraintTop_toTopOf="@+id/layout_month_expense">
+
+                <TextView
+                    android:id="@+id/tv_label_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Year"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tv_expense_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semi_bold"
+                    android:includeFontPadding="false"
+                    android:layout_gravity="center_horizontal"
+                    app:drawableStartCompat="@drawable/ic_currency_red"
+                    android:text="0.0"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_activity_helper_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="This is your currently based all over Expenses."
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_today_expense"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -43,7 +198,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/_4sdp"
+        android:layout_marginHorizontal="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@+id/activity_card_view"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
