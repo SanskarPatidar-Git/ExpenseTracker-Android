@@ -38,6 +38,7 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
         return new ViewExpenseViewHolder(binding);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewExpenseViewHolder holder, int position) {
         ExpenseEntity entity = expenseList.get(position);
@@ -53,7 +54,7 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
 
         String date = entity.getDate();
         String[] dateArr = date.split("-");
-        holder.binding.tvDate.setText(dateArr[0] + " "+ DateFormat.getMonthNameByDigit(Integer.valueOf(dateArr[1])) + ", " + dateArr[2]);
+        holder.binding.tvDate.setText(dateArr[0] + " "+ DateFormat.getMonthNameByDigit(Integer.parseInt(dateArr[1])) + ", " + dateArr[2]);
 
         holder.binding.btnRemoveExpense.setOnClickListener(view -> {
             itemClickListener.onClickRemove(entity.getId() , holder.getAdapterPosition());

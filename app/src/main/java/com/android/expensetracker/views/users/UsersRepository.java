@@ -25,4 +25,8 @@ public class UsersRepository {
             usersDao.deleteUser(id);
         }
     }
+
+    public UsersEntity getUserById(int id){
+        return usersDao.getUserById(id);
+    }
 }

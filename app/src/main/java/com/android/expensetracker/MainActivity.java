@@ -10,6 +10,7 @@ import com.android.expensetracker.views.addexpense.AddExpenseActivity;
 import com.android.expensetracker.views.transactions.TransactionBottomSheet;
 import com.android.expensetracker.views.users.UsersActivity;
 import com.android.expensetracker.views.viewexpense.ViewExpenseActivity;
+import com.android.expensetracker.views.viewtransactions.ViewTransactionActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnBorrowMoney.setOnClickListener(view -> {
             openBottomSheet(Constants.BORROWED_MODE);
+        });
+
+        binding.btnAllTransactions.setOnClickListener(view -> {
+            AppUtil.navigateTo(MainActivity.this , ViewTransactionActivity.class);
         });
     }
 

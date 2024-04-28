@@ -2,6 +2,7 @@ package com.android.expensetracker.views.transactions;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tbl_transactions")
@@ -25,6 +26,9 @@ public class TransactionEntity {
 
     @ColumnInfo(name = "status")
     private int status;
+
+    @Ignore
+    private boolean isEditable;
 
     public TransactionEntity(){
 
@@ -84,5 +88,25 @@ public class TransactionEntity {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isEditable() {
+        return isEditable;
+    }
+
+    public void setEditable(boolean editable) {
+        isEditable = editable;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionEntity{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", date='" + date + '\'' +
+                ", transaction=" + transaction +
+                ", mode=" + mode +
+                ", status=" + status +
+                '}';
     }
 }

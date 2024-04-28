@@ -17,4 +17,7 @@ public interface UsersDao {
 
     @Query("DELETE FROM tbl_users WHERE id = :id")
     void deleteUser(int id);
+
+    @Query("SELECT * FROM tbl_users WHERE id = :id")
+    UsersEntity getUserById(int id);
 }

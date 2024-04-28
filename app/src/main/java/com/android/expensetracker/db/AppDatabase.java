@@ -14,7 +14,7 @@ import com.android.expensetracker.views.users.UsersEntity;
 import com.android.expensetracker.views.addexpense.ExpenseDao;
 import com.android.expensetracker.views.addexpense.ExpenseEntity;
 
-@Database(entities = {ExpenseEntity.class , UsersEntity.class , TransactionEntity.class} , version = 3)
+@Database(entities = {ExpenseEntity.class , UsersEntity.class , TransactionEntity.class} , version = 4)
 public abstract class AppDatabase extends RoomDatabase{
 
     private static AppDatabase appDatabase;

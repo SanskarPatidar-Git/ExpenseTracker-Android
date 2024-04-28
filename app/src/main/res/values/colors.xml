@@ -5,6 +5,7 @@
 
         <!-- 40000000 -->
     <color name="black_secondary">#3D3D3D</color>
+    <color name="grey">#803D3D3D</color>
     <color name="white_secondary">#90FFFFFF</color>
     <color name="red">#CD3514</color>
     <color name="green">#48B151</color>
