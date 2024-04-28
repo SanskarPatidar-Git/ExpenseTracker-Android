@@ -99,6 +99,12 @@ public class ViewTransactionActivity extends AppCompatActivity {
             public void onClickCall(String number) {
                 intentCall(number);
             }
+
+            @Override
+            public void onTransactionListEmpty() {
+                binding.borrowTransactionsLayout.setVisibility(View.GONE);
+                binding.separator.setVisibility(View.GONE);
+            }
         });
     }
 
@@ -124,6 +130,13 @@ public class ViewTransactionActivity extends AppCompatActivity {
             public void onClickCall(String number) {
                 intentCall(number);
             }
+
+            @Override
+            public void onTransactionListEmpty() {
+                binding.lentTransactionsLayout.setVisibility(View.GONE);
+                binding.separator.setVisibility(View.GONE);
+            }
+
         });
     }
 

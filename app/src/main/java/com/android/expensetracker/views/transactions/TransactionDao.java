@@ -21,4 +21,10 @@ public interface TransactionDao {
 
     @Query("DELETE FROM tbl_transactions WHERE id = :id")
     void deleteById(int id);
+
+    @Query("SELECT SUM(`transaction`) FROM tbl_transactions WHERE mode = 1")
+    double getTotalLentTransaction();
+
+    @Query("SELECT SUM(`transaction`) FROM tbl_transactions WHERE mode = 0")
+    double getTotalBorrowedTransaction();
 }

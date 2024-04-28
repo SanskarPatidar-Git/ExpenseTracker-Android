@@ -1,13 +1,16 @@
 package com.android.expensetracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.android.expensetracker.databinding.ActivityMainBinding;
 import com.android.expensetracker.utility.AppUtil;
 import com.android.expensetracker.views.addexpense.AddExpenseActivity;
 import com.android.expensetracker.views.transactions.TransactionBottomSheet;
+import com.android.expensetracker.views.transactions.TransactionRepository;
 import com.android.expensetracker.views.users.UsersActivity;
 import com.android.expensetracker.views.viewexpense.ViewExpenseActivity;
 import com.android.expensetracker.views.viewtransactions.ViewTransactionActivity;
@@ -60,5 +63,32 @@ public class MainActivity extends AppCompatActivity {
         TransactionBottomSheet bottomSheet = new TransactionBottomSheet();
         bottomSheet.setArguments(bundle);
         bottomSheet.show(getSupportFragmentManager() , "TransactionBottomSheet");
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void initTransactions(){
+        TransactionRepository repository = new TransactionRepository();
+        double totalLent = repository.getTotalLent();
+        double totalBorrowed = repository.getTotalBorrowed();
+
+        binding.tvGiven.setText("+"+totalLent);
+        binding.tvTaken.setText("-"+totalBorrowed);
+
+        double total = totalLent - totalBorrowed;
+
+        if(total < 0){
+            binding.tvTotal.setText(String.valueOf(total));
+            binding.tvTotal.setTextColor(ContextCompat.getColorStateList(this,R.color.red));
+        } else {
+            binding.tvTotal.setText("+"+total);
+            binding.tvTotal.setTextColor(ContextCompat.getColorStateList(this,R.color.green));
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initTransactions();
     }
 }

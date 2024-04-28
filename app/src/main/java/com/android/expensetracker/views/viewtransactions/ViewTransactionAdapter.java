@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -109,6 +110,16 @@ public class ViewTransactionAdapter extends RecyclerView.Adapter<ViewTransaction
             else
                 Toast.makeText(context, "Unknown User, Number not found !", Toast.LENGTH_SHORT).show();
         });
+
+        holder.binding.checkboxCleared.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b){
+                holder.binding.etTransaction.setText(0+"");
+            } else {
+                holder.binding.etTransaction.setText("");
+                entity.setEditable(true);
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -120,6 +131,8 @@ public class ViewTransactionAdapter extends RecyclerView.Adapter<ViewTransaction
         try {
             transactionList.remove(position);
             notifyItemRemoved(position);
+            if(transactionList.size() == 0)
+                itemClickListener.onTransactionListEmpty();
         } catch (Exception e) {
             System.err.println("EXCEPTION FOUND ===========>");
         }
@@ -153,5 +166,6 @@ public class ViewTransactionAdapter extends RecyclerView.Adapter<ViewTransaction
         void onClickSave(TransactionEntity entity, int position);
 
         void onClickCall(String number);
+        void onTransactionListEmpty();
     }
 }

@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.android.expensetracker.Constants;
+import com.android.expensetracker.MainActivity;
 import com.android.expensetracker.R;
 import com.android.expensetracker.databinding.BottomsheetLentBorrowTransactionsBinding;
 import com.android.expensetracker.utility.DateFormat;
@@ -86,6 +87,7 @@ public class TransactionBottomSheet extends BottomSheetDialogFragment {
                 transactionEntity.setStatus(Constants.TRANSACTION_PENDING);
                 new TransactionRepository().save(transactionEntity);
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                ((MainActivity)requireActivity()).initTransactions();
                 dismiss();
             }
         });

@@ -22,7 +22,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:singleLine="true"
-            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:fontFamily="@font/poppins_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,21 +30,33 @@
 
         <TextView
             android:id="@+id/tv_number"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+91 7224890928"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             android:includeFontPadding="false"
             android:textAlignment="textEnd"
+            android:layout_marginEnd="@dimen/_4sdp"
             android:fontFamily="@font/poppins_regular"
-            app:layout_constraintTop_toTopOf="@+id/tv_name"
+            app:layout_constraintTop_toTopOf="@+id/img_call"
+            app:layout_constraintEnd_toStartOf="@+id/img_call"
             app:layout_constraintStart_toEndOf="@+id/tv_name"
+            app:layout_constraintBottom_toBottomOf="@+id/img_call"/>
+
+        <ImageView
+            android:id="@+id/img_call"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:src="@drawable/ic_call"
+            android:background="@drawable/ic_circle_black"
+            android:padding="@dimen/_6sdp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/tv_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="24 Apr, 2024"
             android:textColor="@color/white"
@@ -75,16 +87,31 @@
 
         <ImageView
             android:id="@+id/img_edit"
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
             android:src="@drawable/ic_edit"
             android:background="@drawable/ic_circle_black"
-            android:padding="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
             app:layout_constraintTop_toTopOf="@+id/et_transaction"
             app:layout_constraintBottom_toBottomOf="@+id/et_transaction"
             app:layout_constraintStart_toEndOf="@+id/et_transaction"
-            app:layout_constraintEnd_toStartOf="@+id/btn_save"/>
+            app:layout_constraintEnd_toStartOf="@+id/checkbox_cleared"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_cleared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:buttonTint="@color/white"
+            android:textColor="@color/white"
+            android:text="Cleared"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_regular"
+            app:layout_constraintStart_toEndOf="@+id/img_edit"
+            app:layout_constraintEnd_toStartOf="@+id/btn_save"
+            app:layout_constraintTop_toTopOf="@id/et_transaction"
+            app:layout_constraintBottom_toBottomOf="@id/et_transaction"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"
@@ -97,22 +124,12 @@
             android:textSize="@dimen/_12ssp"
             app:cornerRadius="@dimen/_4sdp"
             app:backgroundTint="@color/green"
-            app:layout_constraintStart_toEndOf="@+id/img_edit"
+            app:layout_constraintStart_toEndOf="@+id/checkbox_cleared"
             app:layout_constraintTop_toTopOf="@+id/et_transaction"
-            app:layout_constraintEnd_toStartOf="@+id/img_call"
-            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/et_transaction"/>
 
-        <ImageView
-            android:id="@+id/img_call"
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
-            android:src="@drawable/ic_call"
-            android:background="@drawable/ic_circle_black"
-            android:padding="@dimen/_6sdp"
-            app:layout_constraintTop_toTopOf="@+id/et_transaction"
-            app:layout_constraintBottom_toBottomOf="@+id/et_transaction"
-            app:layout_constraintEnd_toEndOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

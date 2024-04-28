@@ -16,8 +16,11 @@ public interface ExpenseDao {
     List<ExpenseEntity> getAllExpenses();
 
     @Query("DELETE FROM tbl_expenses WHERE id = :id")
-    public void delete(int id);
+    void delete(int id);
 
     @Query("SELECT * FROM tbl_expenses WHERE expense_date = :currentDate")
-    public List<ExpenseEntity> getExpensesOfToday(String currentDate);
+    List<ExpenseEntity> getExpensesOfToday(String currentDate);
+
+    @Query("DELETE FROM tbl_expenses")
+    void deleteAll();
 }

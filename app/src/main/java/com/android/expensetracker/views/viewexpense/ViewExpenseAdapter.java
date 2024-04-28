@@ -78,6 +78,13 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void deleteAllExpenses(){
+        expenseList.clear();
+        ((ViewExpenseActivity)context).isExpenseFound = false;
+        notifyDataSetChanged();
+    }
+
     public List<ExpenseEntity> getExpenseList(){
         return expenseList;
     }

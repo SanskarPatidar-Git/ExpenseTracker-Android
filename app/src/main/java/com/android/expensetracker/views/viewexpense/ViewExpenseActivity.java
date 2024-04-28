@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.android.expensetracker.R;
 import com.android.expensetracker.databinding.ActivityViewExpenseBinding;
@@ -22,6 +23,7 @@ public class ViewExpenseActivity extends AppCompatActivity {
     private ActivityViewExpenseBinding binding;
     private ExpenseRepository expenseRepository;
     private ViewExpenseAdapter adapter;
+    public boolean isExpenseFound ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,19 @@ public class ViewExpenseActivity extends AppCompatActivity {
         binding.header.imgBack.setOnClickListener(view -> {
             finish();
         });
+
+        binding.btnClearAll.setOnClickListener(view -> {
+            if(isExpenseFound){
+                showAlertDialog(0,0,true , "Clear All");
+            } else
+                Toast.makeText(this, "Already cleared", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void getAllExpenses(){
         List<ExpenseEntity> expenseList = expenseRepository.getAllExpenses();
+        if(expenseList.size() > 0)
+            isExpenseFound = true;
         Collections.reverse(expenseList);
         setExpenseAdapter(expenseList);
     }
@@ -59,23 +70,29 @@ public class ViewExpenseActivity extends AppCompatActivity {
         adapter.setItemClickListener(new ViewExpenseAdapter.ItemClickListener() {
             @Override
             public void onClickRemove(int id, int position) {
-                showAlertDialog(id,position);
+                showAlertDialog(id,position,false , "Delete");
             }
         });
         initExpenseActivities();
     }
 
-    private void showAlertDialog(int id , int position) {
+    private void showAlertDialog(int id , int position , boolean clearAll , String title) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setIcon(R.drawable.ic_delete);
-        dialog.setTitle("Delete");
+        dialog.setTitle(title);
         dialog.setMessage("Are you sure you want to remove the Expense ?");
 
         dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                expenseRepository.deleteExpense(id);
-                adapter.deleteExpense(position);
+                if(clearAll){
+                    expenseRepository.deleteAllExpenses();
+                    adapter.deleteAllExpenses();
+                } else {
+                    expenseRepository.deleteExpense(id);
+                    adapter.deleteExpense(position);
+                }
+                initExpenseActivities();
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override

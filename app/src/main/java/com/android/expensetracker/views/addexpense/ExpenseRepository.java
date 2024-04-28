@@ -28,4 +28,8 @@ public class ExpenseRepository {
     public List<ExpenseEntity> getExpensesOfToday(){
         return expenseDao.getExpensesOfToday(DateFormat.getCurrentDate());
     }
+
+    public void deleteAllExpenses(){
+        expenseDao.deleteAll();
+    }
 }

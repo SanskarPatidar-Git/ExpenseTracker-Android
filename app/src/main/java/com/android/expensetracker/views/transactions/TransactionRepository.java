@@ -27,4 +27,12 @@ public class TransactionRepository {
     public void delete(int id){
         transactionDao.deleteById(id);
     }
+
+    public double getTotalLent(){
+        return transactionDao.getTotalLentTransaction();
+    }
+
+    public double getTotalBorrowed(){
+        return transactionDao.getTotalBorrowedTransaction();
+    }
 }
