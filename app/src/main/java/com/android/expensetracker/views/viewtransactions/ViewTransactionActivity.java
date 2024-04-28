@@ -62,17 +62,19 @@ public class ViewTransactionActivity extends AppCompatActivity {
         }
 
         List<UsersEntity> userList = getUsers();
-        if(lentTransactionList.size() == 0)
+        if(lentTransactionList.size() == 0){
             binding.lentTransactionsLayout.setVisibility(View.GONE);
-        else {
+            binding.separator.setVisibility(View.GONE);
+        } else {
             Collections.reverse(lentTransactionList);
             setLentTransactionAdapter(lentTransactionList , userList);
         }
 
 
-        if(borrowedTransactionList.size() == 0)
+        if(borrowedTransactionList.size() == 0){
             binding.borrowTransactionsLayout.setVisibility(View.GONE);
-        else {
+            binding.separator.setVisibility(View.GONE);
+        } else {
             Collections.reverse(borrowedTransactionList);
             setBorrowedTransactionAdapter(borrowedTransactionList , userList);
         }
