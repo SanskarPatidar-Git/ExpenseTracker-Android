@@ -75,6 +75,7 @@
         android:layout_margin="@dimen/_8sdp"
         android:fontFamily="@font/poppins_semi_bold"
         android:text="@string/save"
+        android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         app:cornerRadius="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="parent"

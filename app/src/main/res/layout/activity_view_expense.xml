@@ -30,6 +30,7 @@
         android:backgroundTint="@color/red"
         android:fontFamily="@font/poppins_semi_bold"
         android:text="Clear All"
+        android:textColor="@color/white"
         android:textSize="@dimen/_11ssp"
         app:cornerRadius="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
