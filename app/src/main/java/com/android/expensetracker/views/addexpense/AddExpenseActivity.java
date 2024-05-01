@@ -124,11 +124,12 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     private void insertDummyData(){
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Lunch");
-        arrayList.add("Breakfast");
         arrayList.add("Tea");
+        arrayList.add("Breakfast");
+        arrayList.add("Lunch");
+        arrayList.add("Dinner");
+        arrayList.add("Meal");
         arrayList.add("Petrol");
-        arrayList.add("Movie");
         arrayList.add("Other");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_spinner_textview, arrayList);

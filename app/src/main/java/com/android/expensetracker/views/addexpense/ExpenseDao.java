@@ -23,4 +23,7 @@ public interface ExpenseDao {
 
     @Query("DELETE FROM tbl_expenses")
     void deleteAll();
+
+    @Query("SELECT * FROM tbl_expenses WHERE expense_date LIKE '%' || :date")
+    List<ExpenseEntity> getExpensesByMonth(String date);
 }

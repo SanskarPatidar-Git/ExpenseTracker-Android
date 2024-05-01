@@ -115,6 +115,22 @@
                         app:layout_constraintTop_toTopOf="@+id/btn_add_expense"
                         app:rippleColor="@color/white" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_monthly_expense"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:backgroundTint="@color/black_secondary"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="@string/monthly_expense_summary"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_add_expense"
+                        app:rippleColor="@color/white" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>

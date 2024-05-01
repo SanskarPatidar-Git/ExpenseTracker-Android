@@ -31,6 +31,12 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
         this.itemClickListener = itemClickListener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setNewExpenseList(List<ExpenseEntity> expenseList){
+        this.expenseList = expenseList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewExpenseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

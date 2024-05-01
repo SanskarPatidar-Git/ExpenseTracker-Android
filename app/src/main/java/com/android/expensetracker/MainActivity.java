@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.android.expensetracker.databinding.ActivityMainBinding;
 import com.android.expensetracker.utility.AppUtil;
 import com.android.expensetracker.views.addexpense.AddExpenseActivity;
+import com.android.expensetracker.views.monthexpense.MonthExpenseActivity;
 import com.android.expensetracker.views.transactions.TransactionBottomSheet;
 import com.android.expensetracker.views.transactions.TransactionRepository;
 import com.android.expensetracker.views.users.UsersActivity;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         binding.btnAllTransactions.setOnClickListener(view -> {
             AppUtil.navigateTo(MainActivity.this , ViewTransactionActivity.class);
+        });
+
+        binding.btnMonthlyExpense.setOnClickListener(view -> {
+            AppUtil.navigateTo(MainActivity.this , MonthExpenseActivity.class);
         });
     }
 
