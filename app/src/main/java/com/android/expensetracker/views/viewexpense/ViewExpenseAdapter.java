@@ -35,6 +35,7 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
     public void setNewExpenseList(List<ExpenseEntity> expenseList){
         this.expenseList = expenseList;
         notifyDataSetChanged();
+        itemClickListener.onDataLoaded();
     }
 
     @NonNull
@@ -106,5 +107,6 @@ public class ViewExpenseAdapter extends RecyclerView.Adapter<ViewExpenseAdapter.
 
     public interface ItemClickListener {
         void onClickRemove(int id , int position);
+        void onDataLoaded();
     }
 }

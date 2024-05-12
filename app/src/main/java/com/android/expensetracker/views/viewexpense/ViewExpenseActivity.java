@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.expensetracker.R;
@@ -71,6 +72,11 @@ public class ViewExpenseActivity extends AppCompatActivity {
             @Override
             public void onClickRemove(int id, int position) {
                 showAlertDialog(id,position,false , "Delete");
+            }
+
+            @Override
+            public void onDataLoaded(){
+
             }
         });
         initExpenseActivities();

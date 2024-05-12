@@ -6,11 +6,13 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +26,9 @@ import com.android.expensetracker.views.viewexpense.ViewExpenseAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MonthExpenseActivity extends AppCompatActivity {
 
@@ -57,7 +61,22 @@ public class MonthExpenseActivity extends AppCompatActivity {
         });
 
         binding.btnSearch.setOnClickListener(view -> {
-            getMonthlyExpense();
+            binding.progressBar.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    handler.removeCallbacks(this);
+                    getMonthlyExpense();
+                }
+            });
+        });
+
+        binding.checkViewSummary.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b){
+                binding.tvSummary.setVisibility(View.VISIBLE);
+            } else
+                binding.tvSummary.setVisibility(View.GONE);
         });
     }
 
@@ -87,14 +106,49 @@ public class MonthExpenseActivity extends AppCompatActivity {
                 expenseRepository.deleteExpense(id);
                 adapter.deleteExpense(position);
             }
+
+            @Override
+            public void onDataLoaded(){
+                binding.progressBar.setVisibility(View.GONE);
+            }
         });
     }
 
     private void notifyAdapter(List<ExpenseEntity> expenseEntityList){
         if(expenseEntityList.size() == 0){
             Toast.makeText(this, "No Expense found", Toast.LENGTH_SHORT).show();
+            binding.summaryLayout.setVisibility(View.GONE);
+            binding.progressBar.setVisibility(View.GONE);
+        } else {
+            getExpenseSummary(expenseEntityList);
+            binding.summaryLayout.setVisibility(View.VISIBLE);
         }
         adapter.setNewExpenseList(expenseEntityList);
+    }
+
+    private void getExpenseSummary(List<ExpenseEntity> expenseEntityList){
+        Map<String , Double> expMap = new HashMap<>();
+        for(ExpenseEntity entity : expenseEntityList){
+            String key = entity.getExpenseOf();
+            Double expense = expMap.get(key);
+            if(expense == null)
+                expMap.put(key,entity.getExpense());
+            else {
+                expense += entity.getExpense();
+                expMap.put(key,expense);
+            }
+        }
+        System.out.println("==== SUMMARY ==== > "+expMap);
+
+        String expenseSummary = expMap.toString();
+        expenseSummary = expenseSummary.replace("=","  :  ");
+        expenseSummary = expenseSummary.replace(", ","\n");
+        int length = expenseSummary.length();
+        expenseSummary = expenseSummary.substring(1,length-1);
+        binding.tvSummary.setText(expenseSummary);
+//        expMap.forEach((key, value) -> {
+//
+//        });
     }
 
     private void initSpinners(){
@@ -118,6 +172,8 @@ public class MonthExpenseActivity extends AppCompatActivity {
         monthAdapter.setDropDownViewResource(R.layout.item_spinner_textview);
         binding.monthSpinner.setAdapter(monthAdapter);
 
+        int currentMonth = DateFormat.getCurrentMonth();
+        binding.monthSpinner.setSelection(currentMonth-1);
 
         //Year
         ArrayList<String> yearList = new ArrayList<>();
@@ -128,6 +184,8 @@ public class MonthExpenseActivity extends AppCompatActivity {
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<>(this, R.layout.item_spinner_textview, yearList);
         yearAdapter.setDropDownViewResource(R.layout.item_spinner_textview);
         binding.yearSpinner.setAdapter(yearAdapter);
+
+        binding.yearSpinner.setSelection(yearList.size()-1);
     }
 
 //    private void createPieChart(List<ExpenseEntity> expenseList) {

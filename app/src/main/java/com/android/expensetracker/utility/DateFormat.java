@@ -40,8 +40,10 @@ public class DateFormat {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = dayOfMonth + "-" + month + "-" + year;
-                datePickerListener.onSelectDate(date);
+                @SuppressLint("DefaultLocale")
+                String formattedDate = String.format("%02d-%02d-%04d", dayOfMonth, month, year);
+                //String date = dayOfMonth + "-" + month + "-" + year;
+                datePickerListener.onSelectDate(formattedDate);
             }
         }, year, month, day);
         dialog.show();
@@ -96,5 +98,10 @@ public class DateFormat {
     public static int getCurrentYear(){
         Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
+    }
+
+    public static int getCurrentMonth(){
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MONTH) + 1;
     }
 }
