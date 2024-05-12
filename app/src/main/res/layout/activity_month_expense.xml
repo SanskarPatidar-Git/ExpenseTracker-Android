@@ -127,7 +127,7 @@
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/_4sdp"
                 android:paddingHorizontal="@dimen/_8sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:background="@drawable/shape_cornercut_black"
                 app:layout_constraintStart_toStartOf="parent"
@@ -159,6 +159,37 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp" />
+
+                <LinearLayout
+                    android:id="@+id/export_summary_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_export_summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_42sdp"
+                        android:fontFamily="@font/poppins_semi_bold"
+                        android:text="Export Summary"
+                        android:backgroundTint="@color/green"
+                        android:textSize="@dimen/_12ssp"
+                        app:cornerRadius="@dimen/_4sdp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/_4sdp" />
+
+                    <TextView
+                        android:id="@+id/tv_helper_export_summary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Export your all the monthly expenses into a single frame.\nRemember : You will not be able to expand your expenses again."
+                        android:textColor="@color/white_secondary"
+                        android:textSize="@dimen/_10ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

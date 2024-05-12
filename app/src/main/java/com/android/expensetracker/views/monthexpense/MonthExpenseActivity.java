@@ -78,6 +78,11 @@ public class MonthExpenseActivity extends AppCompatActivity {
             } else
                 binding.tvSummary.setVisibility(View.GONE);
         });
+
+        binding.btnExportSummary.setOnClickListener(view -> {
+
+        });
+
     }
 
     private void getMonthlyExpense() {
@@ -93,8 +98,17 @@ public class MonthExpenseActivity extends AppCompatActivity {
         for(ExpenseEntity entity : expenseList){
             totalExpense += entity.getExpense();
         }
+        initExportSummary(month,year);
         binding.tvMonthExpense.setText(String.valueOf(totalExpense));
         notifyAdapter(expenseList);
+    }
+
+    private void initExportSummary(String month , String year){
+        if(DateFormat.getCurrentMonth() == Integer.parseInt(month) && DateFormat.getCurrentYear() == Integer.parseInt(year)){
+            binding.exportSummaryLayout.setVisibility(View.GONE);
+        } else {
+
+        }
     }
 
     private void setExpenseAdapter() {
@@ -119,6 +133,7 @@ public class MonthExpenseActivity extends AppCompatActivity {
             Toast.makeText(this, "No Expense found", Toast.LENGTH_SHORT).show();
             binding.summaryLayout.setVisibility(View.GONE);
             binding.progressBar.setVisibility(View.GONE);
+            binding.exportSummaryLayout.setVisibility(View.GONE);
         } else {
             getExpenseSummary(expenseEntityList);
             binding.summaryLayout.setVisibility(View.VISIBLE);
@@ -146,9 +161,6 @@ public class MonthExpenseActivity extends AppCompatActivity {
         int length = expenseSummary.length();
         expenseSummary = expenseSummary.substring(1,length-1);
         binding.tvSummary.setText(expenseSummary);
-//        expMap.forEach((key, value) -> {
-//
-//        });
     }
 
     private void initSpinners(){
