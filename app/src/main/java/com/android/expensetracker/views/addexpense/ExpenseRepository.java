@@ -36,4 +36,8 @@ public class ExpenseRepository {
     public List<ExpenseEntity> getExpensesByMonth(String date){
         return expenseDao.getExpensesByMonth(date);
     }
+
+    public void deleteMonthExpense(String date){
+        expenseDao.deleteMonthExpense(date);
+    }
 }

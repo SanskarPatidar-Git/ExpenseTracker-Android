@@ -1,12 +1,16 @@
 package com.android.expensetracker.views.monthexpense;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +27,10 @@ import com.android.expensetracker.utility.DateFormat;
 import com.android.expensetracker.views.addexpense.ExpenseEntity;
 import com.android.expensetracker.views.addexpense.ExpenseRepository;
 import com.android.expensetracker.views.viewexpense.ViewExpenseAdapter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +38,12 @@ import java.util.Map;
 
 public class MonthExpenseActivity extends AppCompatActivity {
 
+    private static final String TAG = "MonthExpenseActivity";
     private ActivityMonthExpenseBinding binding;
     private ExpenseRepository expenseRepository;
+    private ExportSummaryRepository exportSummaryRepository;
     private ViewExpenseAdapter adapter;
+    private String expenseSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,7 @@ public class MonthExpenseActivity extends AppCompatActivity {
     private void init(){
         binding.header.tvTitle.setText("Month Expense");
         expenseRepository = new ExpenseRepository();
+        exportSummaryRepository = new ExportSummaryRepository();
     }
 
     private void initListeners() {
@@ -80,7 +90,7 @@ public class MonthExpenseActivity extends AppCompatActivity {
         });
 
         binding.btnExportSummary.setOnClickListener(view -> {
-
+            showAlertDialog();
         });
 
     }
@@ -98,18 +108,11 @@ public class MonthExpenseActivity extends AppCompatActivity {
         for(ExpenseEntity entity : expenseList){
             totalExpense += entity.getExpense();
         }
-        initExportSummary(month,year);
-        binding.tvMonthExpense.setText(String.valueOf(totalExpense));
-        notifyAdapter(expenseList);
+        double exportedExpense = exportSummaryRepository.getTotalExportedExpenseOfMonthYear(Integer.parseInt(month) , Integer.parseInt(year));
+        binding.tvMonthExpense.setText(String.valueOf(totalExpense+exportedExpense));
+        notifyAdapter(expenseList , month , year);
     }
 
-    private void initExportSummary(String month , String year){
-        if(DateFormat.getCurrentMonth() == Integer.parseInt(month) && DateFormat.getCurrentYear() == Integer.parseInt(year)){
-            binding.exportSummaryLayout.setVisibility(View.GONE);
-        } else {
-
-        }
-    }
 
     private void setExpenseAdapter() {
         adapter = new ViewExpenseAdapter(this,new ArrayList<>());
@@ -119,6 +122,7 @@ public class MonthExpenseActivity extends AppCompatActivity {
             public void onClickRemove(int id, int position) {
                 expenseRepository.deleteExpense(id);
                 adapter.deleteExpense(position);
+                getMonthlyExpense();
             }
 
             @Override
@@ -128,10 +132,34 @@ public class MonthExpenseActivity extends AppCompatActivity {
         });
     }
 
-    private void notifyAdapter(List<ExpenseEntity> expenseEntityList){
+    private void notifyAdapter(List<ExpenseEntity> expenseEntityList , String month , String year){
+
+        //We are restricted to export the summary of current month.
+        if(DateFormat.getCurrentMonth() == Integer.parseInt(month) && DateFormat.getCurrentYear() == Integer.parseInt(year)){
+            binding.exportSummaryLayout.setVisibility(View.GONE);
+        } else {
+            binding.exportSummaryLayout.setVisibility(View.VISIBLE);
+        }
+
+        /*
+        1. Check from expenses if any expenses are found. If not(Size == 0) then check is the expenses of current month
+           is Exported.
+        2. If exported then show the summary or not found then no expenses done of that month.
+         */
         if(expenseEntityList.size() == 0){
-            Toast.makeText(this, "No Expense found", Toast.LENGTH_SHORT).show();
-            binding.summaryLayout.setVisibility(View.GONE);
+
+            //Check that the month is already exported.
+            ExportSummaryEntity summaryEntity = exportSummaryRepository.getSummary(Integer.parseInt(month) , Integer.parseInt(year));
+            if(summaryEntity == null){
+                Toast.makeText(this, "No Expense found", Toast.LENGTH_SHORT).show();
+                binding.summaryLayout.setVisibility(View.GONE);
+            } else {
+                binding.tvMonthExpense.setText(String.valueOf(summaryEntity.getTotalExpense()));
+                String summary = summaryEntity.getSummary().replace(" ","\n");
+                summaryEntity.setSummary(summary);
+                binding.tvSummary.setText(summary);
+                binding.summaryLayout.setVisibility(View.VISIBLE);
+            }
             binding.progressBar.setVisibility(View.GONE);
             binding.exportSummaryLayout.setVisibility(View.GONE);
         } else {
@@ -155,11 +183,10 @@ public class MonthExpenseActivity extends AppCompatActivity {
         }
         System.out.println("==== SUMMARY ==== > "+expMap);
 
-        String expenseSummary = expMap.toString();
-        expenseSummary = expenseSummary.replace("=","  :  ");
+        expenseSummary = expMap.toString();
+        expenseSummary = expenseSummary.replace("=","->");
         expenseSummary = expenseSummary.replace(", ","\n");
-        int length = expenseSummary.length();
-        expenseSummary = expenseSummary.substring(1,length-1);
+        expenseSummary = expenseSummary.substring(1,expenseSummary.length()-1);
         binding.tvSummary.setText(expenseSummary);
     }
 
@@ -200,100 +227,108 @@ public class MonthExpenseActivity extends AppCompatActivity {
         binding.yearSpinner.setSelection(yearList.size()-1);
     }
 
-//    private void createPieChart(List<ExpenseEntity> expenseList) {
-//        ArrayList<PieEntry> entries = new ArrayList<>();
-//        ArrayList<Integer> colors = new ArrayList<>();
-//
-//        float totalExpenses = 0f;
-//
-//        // Calculate total expenses for the selected time period
-//        for (ExpenseModel expense : expenseList) {
-//            totalExpenses += expense.getAmount();
-//        }
-//
-//        // Iterate over the expense list to calculate total expenses for each category
-//        for (ExpenseModel expense : expenseList) {
-//            float amount = (float) expense.getAmount();
-//            String category = expense.getExpenseCategory();
-//
-//            // Skip categories with zero expenses
-//            if (amount <= 0) {
-//                continue;
-//            }
-//
-//            // Add the category to the pie chart
-//            entries.add(new PieEntry(amount / totalExpenses * 100, category));
-//
-//            // Set color for the category
-//            int color = getColorForCategory(category);
-//            colors.add(color);
-//        }
-//
-//        // Create the dataset and set the data
-//        PieDataSet dataSet = new PieDataSet(entries, "Pie Chart");
-//        dataSet.setColors(colors);
-//        dataSet.setDrawValues(true);
-//        dataSet.setValueTextColor(Color.WHITE); // Value text color
-//        dataSet.setValueTextSize(10f); // Value text size
-//        dataSet.setSliceSpace(0f); // Space between slices
-//
-//        PieData data = new PieData(dataSet);
-//
-//        // Set data and customize the pie chart
-//        PieChart pieChart = binding.pieChart;
-//        pieChart.setData(data);
-//        pieChart.setCenterText("Category Wise Expense");
-//        pieChart.setCenterTextSize(18f);
-//        pieChart.setHoleRadius(0);
-//        pieChart.setTransparentCircleRadius(0);
-//        pieChart.setDrawEntryLabels(false);
-//        pieChart.getLegend().setEnabled(false);
-//        pieChart.animateY(1000);
-//
-//        // Set hole color for each slice
-//        for (int i = 0; i < entries.size(); i++) {
-//            int sliceColor = colors.get(i);
-//            pieChart.setHoleColor(sliceColor);
-//        }
-//
-//        // Clear the legend container before adding new legend entries
-//        LinearLayout legendContainer = binding.linExpenseLegendContainer;
-//        legendContainer.removeAllViews();
-//
-//        // Add legend entries for each category
-//        for (int i = 0; i < entries.size(); i++) {
-//            PieEntry entry = entries.get(i);
-//            int color = colors.get(i);
-//            String label = entry.getLabel();
-//
-//
-//            TextView legendEntry = new TextView(getContext());
-//            legendEntry.setLayoutParams(new LinearLayout.LayoutParams(
-//                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-//            ));
-//            legendEntry.setPadding(16, 0, 16, 3);
-//            legendEntry.setCompoundDrawablePadding(8);
-//            legendEntry.setGravity(Gravity.CENTER_VERTICAL);
-//            legendEntry.setCompoundDrawablesWithIntrinsicBounds(R.drawable.legend_dot, 0, 0, 0);
-//            legendEntry.setText(label + " (" + String.format("%.2f", entry.getValue()) + "%)");
-//            legendEntry.setTextColor(Color.BLACK);
-//            legendEntry.setTextSize(12f);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                legendEntry.setCompoundDrawableTintList(ColorStateList.valueOf(color));
-//            }
-//
-//            legendContainer.addView(legendEntry);
-//        }
-//    }
-//
-//    private int getColorForCategory(String category) {
-//
-//        int hash = category.hashCode();
-//        int color = Color.HSVToColor(new float[]{
-//                (hash & 0xFF) / 255.0f * 360.0f,
-//                1.0f,
-//                0.8f
-//        });
-//        return color;
-//    }
+    private void showAlertDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setIcon(R.drawable.ic_export);
+        dialog.setTitle("Export");
+        dialog.setMessage("Are you sure you want to export the Monthly Expense ?");
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exportExpense();
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        dialog.show();
+    }
+
+    private void exportExpense() {
+        String month = DateFormat.getMonthDigitByName((String) binding.monthSpinner.getSelectedItem());
+        String year = (String) binding.yearSpinner.getSelectedItem();
+        String finalDate = month + "-" +year;
+        System.out.println("FinalDate: "+finalDate);
+
+        ExportSummaryEntity summaryEntity = exportSummaryRepository.getSummary(Integer.parseInt(month) , Integer.parseInt(year));
+        if(summaryEntity != null){
+            Toast.makeText(this, "Conflict: Expense is already Exported.", Toast.LENGTH_SHORT).show();
+            showMergeSnackBar(summaryEntity ,finalDate);
+            return;
+        }
+        //Exporting the summary
+        ExportSummaryEntity entity = new ExportSummaryEntity();
+        entity.setMonth(Integer.parseInt(month));
+        entity.setYear(Integer.parseInt(year));
+        entity.setTotalExpense(Double.parseDouble(binding.tvMonthExpense.getText().toString()));
+        entity.setSummary(expenseSummary);
+        exportSummaryRepository.exportSummary(entity);
+
+        //Remove all the expenses
+        expenseRepository.deleteMonthExpense(finalDate);
+        binding.exportSummaryLayout.setVisibility(View.GONE);
+        Toast.makeText(this, "Expenses are Exported", Toast.LENGTH_SHORT).show();
+        adapter.deleteAllExpenses();
+    }
+
+    private void showMergeSnackBar(ExportSummaryEntity entity , String date){
+        Snackbar snackbar = Snackbar.make(binding.getRoot(),"Merge to Exported Expense to resolve this conflicts.",Snackbar.LENGTH_LONG)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE);
+        snackbar.setTextColor(ContextCompat.getColorStateList(this, R.color.white));
+        snackbar.setActionTextColor(ContextCompat.getColorStateList(this, R.color.green));
+        snackbar.show();
+
+        snackbar.setAction("MERGE", view -> {
+            String summary = entity.getSummary();
+            System.out.println("Summary : "+summary);
+            Map<String , Double> expMap = getMapFromString(summary);
+            List<ExpenseEntity> expenseList = adapter.getExpenseList();
+            double totalExpense = 0;
+            for(ExpenseEntity expenseEntity : expenseList){
+                String key = expenseEntity.getExpenseOf();
+                Double expense = expMap.get(key);
+                totalExpense += expenseEntity.getExpense();
+                if(expense == null)
+                    expMap.put(key,expenseEntity.getExpense());
+                else {
+                    expense += expenseEntity.getExpense();
+                    expMap.put(key,expense);
+                }
+            }
+            System.out.println("==== FINAL MAP ====> "+expMap);
+            expenseSummary = expMap.toString();
+            expenseSummary = expenseSummary.replace("=","->");
+            expenseSummary = expenseSummary.replace(", ","\n");
+            expenseSummary = expenseSummary.substring(1,expenseSummary.length()-1);
+
+            expenseRepository.deleteMonthExpense(date);
+            entity.setSummary(expenseSummary);
+            entity.setTotalExpense(entity.getTotalExpense() + totalExpense);
+            exportSummaryRepository.exportSummary(entity);
+            getMonthlyExpense();
+        });
+    }
+
+    private Map<String , Double> getMapFromString(String summary){
+        Map<String,Double> expMap = new HashMap<>();
+        Log.d(TAG, "getMapFromString: Summary : "+summary);
+        String[] arr = summary.split("\\s+");
+
+        for (String s : arr) {
+            String[] keyValueArr = s.split("->");
+            System.out.println("key value => {"+ keyValueArr[0] + " "+keyValueArr[1]);
+            String key = keyValueArr[0].trim();
+            Double expense = expMap.get(key);
+            if (expense == null)
+                expMap.put(key, Double.parseDouble(keyValueArr[1].trim()));
+            else {
+                expense += Double.parseDouble(keyValueArr[1].trim());
+                expMap.put(key, expense);
+            }
+        }
+        System.out.println("MAP : "+expMap);
+        return  expMap;
+    }
+
 }

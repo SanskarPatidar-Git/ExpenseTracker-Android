@@ -17,4 +17,12 @@ public class ExportSummaryRepository {
     public ExportSummaryEntity getSummary(int month , int year){
         return exportSummaryDao.get(month,year);
     }
+
+    public double getTotalExportedExpenseOfYear(int year){
+        return exportSummaryDao.getTotalExportedExpenseOfYear(year);
+    }
+
+    public double getTotalExportedExpenseOfMonthYear(int month , int year){
+        return exportSummaryDao.getTotalExportedExpenseOfMonthYear(month , year);
+    }
 }

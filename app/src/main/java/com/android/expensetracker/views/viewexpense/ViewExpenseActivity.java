@@ -15,6 +15,7 @@ import com.android.expensetracker.databinding.ActivityViewExpenseBinding;
 import com.android.expensetracker.utility.DateFormat;
 import com.android.expensetracker.views.addexpense.ExpenseEntity;
 import com.android.expensetracker.views.addexpense.ExpenseRepository;
+import com.android.expensetracker.views.monthexpense.ExportSummaryRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -136,7 +137,9 @@ public class ViewExpenseActivity extends AppCompatActivity {
                     if(entity.getDate().contains(year))
                         yearExpense += entity.getExpense();
                 }
-                binding.tvExpenseYear.setText(String.valueOf(yearExpense));
+
+                double exportedExpense = new ExportSummaryRepository().getTotalExportedExpenseOfYear(Integer.parseInt(year));
+                binding.tvExpenseYear.setText(String.valueOf(yearExpense+exportedExpense));
                 handler.removeCallbacks(this);
             }
         });
