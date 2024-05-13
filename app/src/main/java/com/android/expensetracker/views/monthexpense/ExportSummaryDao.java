@@ -22,4 +22,6 @@ public interface ExportSummaryDao {
     @Query("SELECT SUM(total_expense) FROM tbl_export_month_summary WHERE month = :month AND year = :year")
     double getTotalExportedExpenseOfMonthYear(int month , int year);
 
+    @Query("DELETE FROM tbl_export_month_summary WHERE month = :month AND year = :year")
+    void deleteByMonthYear(int month , int year);
 }

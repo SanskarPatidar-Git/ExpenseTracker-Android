@@ -25,4 +25,8 @@ public class ExportSummaryRepository {
     public double getTotalExportedExpenseOfMonthYear(int month , int year){
         return exportSummaryDao.getTotalExportedExpenseOfMonthYear(month , year);
     }
+
+    public void clearExportedSummary(int month , int year){
+        exportSummaryDao.deleteByMonthYear(month , year);
+    }
 }

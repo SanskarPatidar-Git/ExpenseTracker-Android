@@ -93,6 +93,9 @@ public class MonthExpenseActivity extends AppCompatActivity {
             showAlertDialog();
         });
 
+        binding.btnClear.setOnClickListener(view -> {
+            deleteExportedSummary();
+        });
     }
 
     private void getMonthlyExpense() {
@@ -329,6 +332,27 @@ public class MonthExpenseActivity extends AppCompatActivity {
         }
         System.out.println("MAP : "+expMap);
         return  expMap;
+    }
+
+    private void deleteExportedSummary(){
+        Snackbar snackbar = Snackbar.make(binding.getRoot(),"You want to delete the summary permanently?",Snackbar.LENGTH_LONG)
+                .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE);
+        snackbar.setTextColor(ContextCompat.getColorStateList(this, R.color.white));
+        snackbar.setActionTextColor(ContextCompat.getColorStateList(this, R.color.red));
+        snackbar.show();
+
+        snackbar.setAction("DELETE",view -> {
+            String month = DateFormat.getMonthDigitByName((String) binding.monthSpinner.getSelectedItem());
+            String year = (String) binding.yearSpinner.getSelectedItem();
+
+            if(DateFormat.getCurrentMonth() == Integer.parseInt(month) && DateFormat.getCurrentYear() == Integer.parseInt(year)){
+                Toast.makeText(this, "Failed! Expenses of current month is not exported yet.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            exportSummaryRepository.clearExportedSummary(Integer.parseInt(month) , Integer.parseInt(year));
+            Toast.makeText(this, "Cleared", Toast.LENGTH_SHORT).show();
+            getMonthlyExpense();
+        });
     }
 
 }
