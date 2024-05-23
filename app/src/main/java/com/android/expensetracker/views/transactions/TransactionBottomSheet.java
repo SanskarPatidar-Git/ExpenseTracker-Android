@@ -85,7 +85,16 @@ public class TransactionBottomSheet extends BottomSheetDialogFragment {
             if(isDetailsValid()){
                 transactionEntity.setMode(mode);
                 transactionEntity.setStatus(Constants.TRANSACTION_PENDING);
-                new TransactionRepository().save(transactionEntity);
+
+                //Check for previous transaction if found then merge it.
+                TransactionRepository repository = new TransactionRepository();
+                TransactionEntity entity = repository.getPreviousTransaction(transactionEntity.getUserId() , mode);
+                if(entity != null){
+                    transactionEntity.setId(entity.getId());
+                    double transaction = entity.getTransaction() + transactionEntity.getTransaction();
+                    transactionEntity.setTransaction(transaction);
+                }
+                repository.save(transactionEntity);
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 ((MainActivity)requireActivity()).initTransactions();
                 dismiss();

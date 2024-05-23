@@ -35,4 +35,8 @@ public class TransactionRepository {
     public double getTotalBorrowed(){
         return transactionDao.getTotalBorrowedTransaction();
     }
+
+    public TransactionEntity getPreviousTransaction(int userId , int mode){
+        return transactionDao.getPreviousTransaction(userId, mode);
+    }
 }
